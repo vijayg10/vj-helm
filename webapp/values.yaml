@@ -45,9 +45,6 @@ frontend:
   envSecrets: {}
   livenessProbe: {}
   readinessProbe: {}
-  nginxConfig:
-    enabled: false
-    config: ""
 
 ingress:
   enabled: false
@@ -55,6 +52,11 @@ ingress:
   annotations: {}
   host: ""
   tls: []
+  backendPaths:
+    - path: /api
+      pathType: Prefix
+    - path: /ws
+      pathType: Prefix
 
 imagePullSecrets: []
 nameOverride: ""

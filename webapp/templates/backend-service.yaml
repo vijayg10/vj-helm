@@ -11,8 +11,10 @@ spec:
     - name: http
       port: {{ .Values.backend.port }}
       targetPort: http
+    {{- if .Values.backend.adminPort }}
     - name: admin
       port: {{ .Values.backend.adminPort }}
       targetPort: admin
+    {{- end }}
   selector:
     {{- include "webapp.backend.selectorLabels" . | nindent 4 }}
