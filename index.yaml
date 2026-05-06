@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  webapp:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-05-06T12:39:54.396860083Z"
+    description: A generic Helm chart for deploying web applications with backend
+      and frontend components
+    digest: 267b95448e74fb3e50f4986fecc0e67c3a7faf60fd11fd450c9b2a196a00d376
+    name: webapp
+    type: application
+    urls:
+    - https://github.com/vijayg10/vj-helm/releases/download/webapp-0.2.0/webapp-0.2.0.tgz
+    version: 0.2.0
+generated: "2026-05-06T12:39:54.396870723Z"
