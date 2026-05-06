@@ -1,0 +1,52 @@
+backend:
+  replicaCount: 1
+  image:
+    repository: ""
+    tag: ""
+    pullPolicy: IfNotPresent
+  port: 3000
+  adminPort: ""
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env: {}
+  envSecrets: {}
+  livenessProbe: {}
+  readinessProbe: {}
+
+frontend:
+  replicaCount: 1
+  image:
+    repository: ""
+    tag: ""
+    pullPolicy: IfNotPresent
+  port: 80
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  env: {}
+  envSecrets: {}
+  livenessProbe: {}
+  readinessProbe: {}
+  nginxConfig:
+    enabled: false
+    config: ""
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  host: ""
+  tls: []
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""

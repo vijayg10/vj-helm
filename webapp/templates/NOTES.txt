@@ -1,0 +1,15 @@
+{{ include "webapp.name" . }} has been deployed!
+
+Components:
+  - Backend: {{ include "webapp.fullname" . }}-backend:{{ .Values.backend.port }}
+  - Frontend: {{ include "webapp.fullname" . }}-frontend:{{ .Values.frontend.port }}
+
+{{- if .Values.ingress.enabled }}
+
+Access the application at: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}
+{{- else }}
+
+To access the application, run:
+  kubectl port-forward svc/{{ include "webapp.fullname" . }}-frontend {{ .Values.frontend.port }}:{{ .Values.frontend.port }}
+  Then open http://localhost:{{ .Values.frontend.port }}
+{{- end }}
