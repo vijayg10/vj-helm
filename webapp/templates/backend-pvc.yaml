@@ -1,0 +1,25 @@
+{{- if and .Values.backend.persistence.enabled .Values.backend.persistence.volumes }}
+{{- range .Values.backend.persistence.volumes }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "webapp.fullname" $ }}-backend-{{ .name }}
+  labels:
+    {{- include "webapp.labels" $ | nindent 4 }}
+    {{- include "webapp.backend.selectorLabels" $ | nindent 4 }}
+spec:
+  accessModes:
+    {{- if .accessModes }}
+    {{- toYaml .accessModes | nindent 4 }}
+    {{- else }}
+    - ReadWriteOnce
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .size | default "1Gi" }}
+  {{- if .storageClass }}
+  storageClassName: {{ .storageClass }}
+  {{- end }}
+{{- end }}
+{{- end }}

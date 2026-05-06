@@ -17,6 +17,15 @@ backend:
   envSecrets: {}
   livenessProbe: {}
   readinessProbe: {}
+  persistence:
+    enabled: false
+    volumes: []
+    # - name: data
+    #   mountPath: /app/data
+    #   size: 1Gi
+    #   storageClass: ""
+    #   accessModes:
+    #     - ReadWriteOnce
 
 frontend:
   replicaCount: 1

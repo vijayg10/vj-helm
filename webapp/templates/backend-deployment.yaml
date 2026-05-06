@@ -53,3 +53,18 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
+          {{- if and .Values.backend.persistence.enabled .Values.backend.persistence.volumes }}
+          volumeMounts:
+            {{- range .Values.backend.persistence.volumes }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
+          {{- end }}
+      {{- if and .Values.backend.persistence.enabled .Values.backend.persistence.volumes }}
+      volumes:
+        {{- range .Values.backend.persistence.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ include "webapp.fullname" $ }}-backend-{{ .name }}
+        {{- end }}
+      {{- end }}
