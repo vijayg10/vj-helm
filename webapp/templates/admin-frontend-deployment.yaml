@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "webapp.fullname" . }}-admin-frontend
+  labels:
+    {{- include "webapp.labels" . | nindent 4 }}
+    {{- include "webapp.adminFrontend.selectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.adminFrontend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "webapp.adminFrontend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "webapp.labels" . | nindent 8 }}
+        {{- include "webapp.adminFrontend.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: admin-frontend
+          image: "{{ .Values.adminFrontend.image.repository }}:{{ .Values.adminFrontend.image.tag }}"
+          imagePullPolicy: {{ .Values.adminFrontend.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.adminFrontend.port }}
+          env:
+            {{- range $key, $value := .Values.adminFrontend.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- range $key, $value := .Values.adminFrontend.envSecrets }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "webapp.fullname" $ }}-admin-frontend-secret
+                  key: {{ $key }}
+            {{- end }}
+{{- with .Values.adminFrontend.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.adminFrontend.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.adminFrontend.resources | nindent 12 }}

@@ -45,3 +45,11 @@ Frontend selector labels
 app.kubernetes.io/name: {{ include "webapp.name" . }}-frontend
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Admin Frontend selector labels
+*/}}
+{{- define "webapp.adminFrontend.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "webapp.name" . }}-admin-frontend
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

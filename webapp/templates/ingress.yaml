@@ -30,6 +30,15 @@ spec:
                 port:
                   name: http
           {{- end }}
+          {{- range .Values.ingress.adminFrontendPaths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "webapp.fullname" $ }}-admin-frontend
+                port:
+                  name: http
+          {{- end }}
           - path: /
             pathType: Prefix
             backend:

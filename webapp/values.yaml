@@ -46,6 +46,25 @@ frontend:
   livenessProbe: {}
   readinessProbe: {}
 
+adminFrontend:
+  replicaCount: 1
+  image:
+    repository: ""
+    tag: ""
+    pullPolicy: IfNotPresent
+  port: 80
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  env: {}
+  envSecrets: {}
+  livenessProbe: {}
+  readinessProbe: {}
+
 ingress:
   enabled: false
   className: ""
@@ -56,6 +75,9 @@ ingress:
     - path: /api
       pathType: Prefix
     - path: /ws
+      pathType: Prefix
+  adminFrontendPaths:
+    - path: /admin
       pathType: Prefix
 
 imagePullSecrets: []
