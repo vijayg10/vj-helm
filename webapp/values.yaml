@@ -70,13 +70,14 @@ ingress:
   className: ""
   annotations: {}
   host: ""
+  adminHost: ""
   tls: []
   backendPaths:
     - path: /api
       pathType: Prefix
     - path: /ws
       pathType: Prefix
-  adminFrontendPaths:
+  adminBackendPaths:
     - path: /admin
       pathType: Prefix
 

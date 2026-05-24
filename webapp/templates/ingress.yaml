@@ -30,15 +30,6 @@ spec:
                 port:
                   name: http
           {{- end }}
-          {{- range .Values.ingress.adminFrontendPaths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
-            backend:
-              service:
-                name: {{ include "webapp.fullname" $ }}-admin-frontend
-                port:
-                  name: http
-          {{- end }}
           - path: /
             pathType: Prefix
             backend:
@@ -46,4 +37,25 @@ spec:
                 name: {{ include "webapp.fullname" . }}-frontend
                 port:
                   name: http
+    {{- if .Values.ingress.adminHost }}
+    - host: {{ .Values.ingress.adminHost }}
+      http:
+        paths:
+          {{- range .Values.ingress.adminBackendPaths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "webapp.fullname" $ }}-backend
+                port:
+                  name: admin
+          {{- end }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "webapp.fullname" . }}-admin-frontend
+                port:
+                  name: http
+    {{- end }}
 {{- end }}
